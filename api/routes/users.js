@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 //UPDATE
 router.put("/:id", async (req, res) => {
   if (req.body.userId === req.params.id) {
+    //if password is changed too
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
@@ -16,7 +17,7 @@ router.put("/:id", async (req, res) => {
         {
           $set: req.body,
         },
-        { new: true }
+        { new: true } //send updates user info
       );
       res.status(200).json(updatedUser);
     } catch (err) {
@@ -31,6 +32,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id) {
     try {
+
       const user = await User.findById(req.params.id);
       try {
         await Post.deleteMany({ username: user.username });
@@ -39,10 +41,12 @@ router.delete("/:id", async (req, res) => {
       } catch (err) {
         res.status(500).json(err);
       }
+
     } catch (err) {
       res.status(404).json("User not found!");
     }
-  } else {
+  }
+   else {
     res.status(401).json("You can delete only your account!");
   }
 });

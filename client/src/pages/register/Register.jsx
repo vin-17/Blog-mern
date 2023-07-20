@@ -19,7 +19,6 @@ export default function Register() {
         username,
         email,
         password,
-        profilePic : PF,
       });
       res.data && window.location.replace("/login");
     } catch (err) {

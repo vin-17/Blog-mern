@@ -11,10 +11,9 @@ router.post("/register", async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: hashedPass,
-      profilePic : req.body.profilePic,
     });
 
-    const user = await newUser.save();
+    const user = await newUser.save(); //save this user
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
@@ -31,6 +30,7 @@ router.post("/login", async (req, res) => {
     const validated = await bcrypt.compare(req.body.password, user.password);
     !validated && res.status(400).json("Wrong credentials!");
 
+    // to not send password only other data
     const { password, ...others } = user._doc;
     res.status(200).json(others);
   } catch (err) {

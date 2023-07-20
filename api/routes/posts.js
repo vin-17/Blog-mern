@@ -82,6 +82,7 @@ router.get("/", async (req, res) => {
         },
       });
     } else {
+      //fetch all the posts
       posts = await Post.find();
     }
     res.status(200).json(posts);

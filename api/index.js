@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
@@ -10,8 +11,9 @@ const multer = require("multer");
 const path = require("path");
 
 dotenv.config();
-app.use(express.json());
+app.use(express.json()); //to send json objects
 app.use("/images", express.static(path.join(__dirname, "/images")));
+//process.env.MONGO_URL
 
 mongoose
   .connect( "mongodb://127.0.0.1:27017/", {
